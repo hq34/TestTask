@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WeatherMaster</title>
+    {% block head %} {% endblock %}
+    {% load bootstrap4 %}
+    {% bootstrap_css %}
+</head>
+<body>
+    <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+        <div class="container-fluid">
+            <a class="navbar-brand font-size-lg" href="/">Список городов</a>
+            {% if user.is_anonymous %}
+                <span class="navbar-text">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#loginModal">Войти</button>
+                </span>
+            {% else %}
+                <span class="navbar-text">
+                    <b>Приветствую, {{ user.username }}</b>
+                    <a href="/logout/" class="btn btn-primary text-light">Выход</a>
+                </span>
+            {% endif %}
+        </div>
+    </nav>
+
+    <br><br>
+
+    <div class="adding-form">
+        <div class="h-600 d-flex align-items-center justify-content-center">
+            <form method="POST">
+                {% csrf_token %}
+                {% block adding_form %} {% endblock %}
+                {% if user.is_authenticated %}
+                    <button type="submit" class="btn btn-primary"> Добавить </button>
+                    {% else %}
+                    <button type="submit" disabled class="btn btn-primary"> Добавить </button>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+
+    <br><br>
+
+    <div class="container">
+    <div class="table-form">
+        <div class="h-600 d-flex align-items-center justify-content-center">
+            {% block table %} {% endblock %}
+        </div>
+    </div>
+    </div>
+    <script>
+        function showConfirmationDialog_city(id) {
+            if (confirm("Вы уверены, что хотите удалить запись?")){
+            window.location.href = `delete_city/${id}`;
+            }
+        }
+    </script>
+    <script>
+        function showConfirmationDialog_record(city_id, id) {
+            console.log(city_id, id)
+            if (confirm("Вы уверены, что хотите удалить запись?")){
+            window.location.href = `/delete_temp_record/${city_id}/${id}/`;
+            }
+        }
+    </script>
+
+
+    {% include 'login.html' %}
+    {% bootstrap_javascript jquery='full' %}
+</body>
+</html>

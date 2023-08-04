@@ -1,0 +1,28 @@
+{% extends '_base.html' %}
+
+{% block adding_form %}
+    {{ form }}
+{% endblock %}
+
+{% if records.count > 0 %}
+    {% block table %}
+        <table class="table">
+            <caption style="caption-side: top;">Температура в городе {{ city.name }} </caption>
+            <thead><th>Дата</th><th>Температура °C</th></thead>
+            {% for record in records %}
+            <tr>
+                <td>{{ record.date }}</td>
+                <td>{{ record.temperature_c }}</td>
+                {% if user.is_authenticated %}
+                    <td><a href="/edit_temp_record/{{ city.id }}/{{ record.id }}" class="btn btn-primary text-light">Изменить</a></td>
+                    <td><a href="#" class="btn btn-primary text-light" onclick="showConfirmationDialog_record({{ city.id }}, {{ record.id }})">Удалить</a></td>
+                {% else %}
+                    <td><a href="edit_record/{{ city.id }}/{{ record.id }}" class="btn btn-primary text-light disabled">Изменить</a></td>
+                    <td><a href="#" class="btn btn-primary text-light disabled" onclick="showConfirmationDialog_record({{ city.id }}, {{ record.id }})">Удалить</a></td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </table>
+    {% endblock %}
+{% endif %}
+

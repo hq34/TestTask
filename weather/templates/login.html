@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>WeatherMaster</title>
+</head>
+<body>
+    <div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="loginModalLabel">Авторизация</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ loginform.as_p }}
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    <button type="submit" class="btn btn-secondary">Логин</button>
+                                </div>
+                                <div class="col">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

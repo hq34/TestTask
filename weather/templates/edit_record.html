@@ -1,0 +1,7 @@
+{% extends '_base.html' %}
+
+{% block adding_form %}
+    <p>Введите новые данные:</p>
+    {% csrf_token %}
+    {{ form.as_p }}
+{% endblock %}

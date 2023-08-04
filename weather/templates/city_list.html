@@ -1,0 +1,32 @@
+{% extends '_base.html' %}
+
+{% block adding_form %}
+    {{ form }}
+{% endblock %}
+
+{% if cities.count > 0 %}
+    {% block table %}
+        <table class="table">
+            <caption style="caption-side: top;">Список городов</caption>
+            <thead><th>#</th><th>Название города</th></thead>
+            {% for city in cities %}
+                <tr>
+                    <td><p>{{ city.id }}</p></td>
+                    <td><a href="temp_records/{{ city.id }}">{{ city.name }}</a></td>
+                    {% if user.is_authenticated %}
+                        <td><a href="edit_city/{{city.id}}" class="btn btn-primary text-light">Изменить</a></td>
+                        <td><a href="#" class="btn btn-primary text-light" onclick="showConfirmationDialog_city({{ city.id }})">Удалить</a></td>
+                    {% else %}
+                        <td><a href="edit_city/{{city.id}}" class="btn btn-primary text-light disabled">Изменить</a></td>
+                        <td><a href="#" class="btn btn-primary text-light disabled" onclick="showConfirmationDialog_city({{ city.id }})">Удалить</a></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </table>
+    {% endblock %}
+{% endif %}
+
+
+
+
+
